@@ -16,3 +16,12 @@
 13:01:27.901595 db@open done T·725.0415ms
 15:04:06.079968 db@close closing
 15:04:06.105969 db@close done T·26.0009ms
+=============== Jan 19, 2018 (GMT) ===============
+11:40:32.026922 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:40:32.026922 version@stat F·[1] S·296KiB[296KiB] Sc·[0.25]
+11:40:32.026922 db@open opening
+11:40:32.026922 version@stat F·[1] S·296KiB[296KiB] Sc·[0.25]
+11:40:32.086723 db@janitor F·3 G·0
+11:40:32.086723 db@open done T·59.8008ms
+11:41:08.045314 db@close closing
+11:41:08.046314 db@close done T·1ms

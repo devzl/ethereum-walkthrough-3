@@ -1,10 +1,18 @@
 pragma solidity ^0.4.18;
 
-    /**
-    * Example script for the Ethereum development walkthrough
-    */
+// @dev Using the SafeMath.sol from https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/math/SafeMath.sol
+import "./SafeMath.sol";
 
+/**
+ * @title Wrestling
+ * @dev Example script for the Ethereum development tutorial Part 3
+ * @dev Incomplete and insecure, this is just an example
+ */
 contract Wrestling {
+
+    // @dev Variables of the type uint will have safe math functions defined in SafeMath.sol 
+    using SafeMath for uint;
+
     /**
     * Our wrestlers
     */
@@ -19,7 +27,6 @@ contract Wrestling {
 
 	bool public gameFinished; 
     address public theWinner;
-    uint gains;
 
     /**
     * The logs that will be emitted in every step of the contract's life cycle
@@ -55,12 +62,14 @@ contract Wrestling {
 
     	if(msg.sender == wrestler1) {
     		require(wrestler1Played == false);
+
     		wrestler1Played = true;
-    		wrestler1Deposit = wrestler1Deposit + msg.value;
+    		wrestler1Deposit = wrestler1Deposit.add(msg.value);
     	} else { 
     		require(wrestler2Played == false);
+
     		wrestler2Played = true;
-    		wrestler2Deposit = wrestler2Deposit + msg.value;
+    		wrestler2Deposit = wrestler2Deposit.add(msg.value);
     	}
     	if(wrestler1Played && wrestler2Played) {
     		if(wrestler1Deposit >= wrestler2Deposit * 2) {
@@ -84,20 +93,17 @@ contract Wrestling {
         gameFinished = true;
         theWinner = winner;
 
-        gains = wrestler1Deposit + wrestler2Deposit;
+        uint gains = wrestler1Deposit.add(wrestler2Deposit);
         EndOfWrestlingEvent(winner, gains);
     }
 
     /**
-    * The withdraw function, following the withdraw pattern shown and explained here: 
-    * http://solidity.readthedocs.io/en/develop/common-patterns.html#withdrawal-from-contracts
+    * @dev The withdraw function, following the withdraw pattern shown and explained here: 
+    * @dev http://solidity.readthedocs.io/en/develop/common-patterns.html#withdrawal-from-contracts
     */
     function withdraw() public {
         require(gameFinished && theWinner == msg.sender);
 
-        uint amount = gains;
-
-        gains = 0;
-        msg.sender.transfer(amount);
+        msg.sender.transfer(this.balance);
     }
 }
